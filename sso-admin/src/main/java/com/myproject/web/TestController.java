@@ -5,6 +5,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * Created by wangmin on 2018/3/9.
  */
@@ -13,8 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class TestController {
 
     @RequestMapping("index")
-    public String index(Model model) {
-        model.addAttribute("userName", "王敏");
+    public String index(Model model, HttpSession session) {
+        String username = (String) session.getAttribute("username");
+        model.addAttribute("userName", username);
         return "index";
     }
 
