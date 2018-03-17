@@ -1,4 +1,4 @@
-package com.myproject.config;
+package com.myproject;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
