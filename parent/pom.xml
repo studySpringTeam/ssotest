@@ -65,6 +65,10 @@
       <artifactId>jstl-api</artifactId>
       <version>1.2</version>
     </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+    </dependency>
 
     <dependency>
       <groupId>org.apache.shiro</groupId>

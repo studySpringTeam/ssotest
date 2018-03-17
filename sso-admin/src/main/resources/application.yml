@@ -12,7 +12,7 @@ spring:
 
 #shiro配置文件路径
 shiro:
-  configLocation: classpath:/shiro/ehcache-shiro.xml
+  configLocation: classpath:shiro/ehcache-shiro.xml
 
 #配置成自己电脑上webapp路径，发布时可改为服务器上路径
 webapp:
