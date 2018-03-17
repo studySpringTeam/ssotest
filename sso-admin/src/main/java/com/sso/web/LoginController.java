@@ -10,16 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class LoginController {
 
-    //退出的时候是get请求，主要是用于退出
-    @RequestMapping(value = "/login",method = RequestMethod.GET)
+    @RequestMapping("/login")
     public String login(){
-        return "login";
-    }
-
-    //post登录
-    @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public String login(String username, String password){
-
         return "login";
     }
 }

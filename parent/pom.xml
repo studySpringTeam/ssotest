@@ -22,6 +22,8 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.7</java.version>
     <tomcat.version>7.0.67</tomcat.version>
+    <thymeleaf.version> 3.0.2.RELEASE </thymeleaf.version>
+    <thymeleaf-layout-dialect.version> 2.1.1 </thymeleaf-layout-dialect.version>
   </properties>
 
   <dependencies>
@@ -84,6 +86,12 @@
       <groupId>org.apache.shiro</groupId>
       <artifactId>shiro-ehcache</artifactId>
       <version>1.2.2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-thymeleaf</artifactId>
+      <version>1.0.2.RELEASE</version>
     </dependency>
 
     <dependency>

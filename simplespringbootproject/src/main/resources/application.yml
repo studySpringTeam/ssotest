@@ -1,0 +1,10 @@
+server:
+  port: 5001
+
+spring:
+  thymeleaf:
+    mode: HTML5
+
+#shiro配置文件路径
+shiro:
+  configLocation: classpath:shiro/ehcache-shiro.xml
