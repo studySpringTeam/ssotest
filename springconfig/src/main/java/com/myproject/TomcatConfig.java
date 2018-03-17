@@ -22,6 +22,9 @@ public class TomcatConfig {
     @Bean
     public EmbeddedServletContainerFactory embeddedServletContainerFactory() {
         ConfigurableEmbeddedServletContainer factory = new TomcatEmbeddedServletContainerFactory();
+        if(webappPath == null || "".equals(webappPath)) {
+            webappPath = new File(this.getClass().getClassLoader().getResource("").getPath()).getParent() + "\\sso-admin-1.0-SNAPSHOT";
+        }
         factory.setDocumentRoot(new File(webappPath));
         return (EmbeddedServletContainerFactory) factory;
     }
