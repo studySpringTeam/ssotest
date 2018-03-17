@@ -12,6 +12,7 @@ import org.apache.shiro.web.util.WebUtils;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by wangmin on 2018/3/17.
@@ -29,6 +30,7 @@ public class MyFormAuthenticationFilter extends FormAuthenticationFilter {
 
         //清理原先的地址
         WebUtils.getAndClearSavedRequest(request);
+
         WebUtils.redirectToSavedRequest(request, response, getSuccessUrl());
         return false;
     }

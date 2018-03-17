@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ImportAutoConfiguration({
 //        TomcatConfig.class,
-//        ShiroConfig.class
+        ShiroConfig.class
 })
 @ComponentScans({
         @ComponentScan(basePackages = {"com.simplespringbootproject.web"})

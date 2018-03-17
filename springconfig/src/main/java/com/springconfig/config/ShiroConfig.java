@@ -1,5 +1,6 @@
 package com.springconfig.config;
 
+import com.springconfig.shiro.filter.SsoFilter;
 import com.springconfig.shiro.spring.DemoRealm;
 import com.springconfig.shiro.filter.MyAuthorizationFilter;
 import com.springconfig.shiro.filter.MyFormAuthenticationFilter;
@@ -30,6 +31,12 @@ public class ShiroConfig {
 
     @Value("${shiro.configLocation}")
     private String ehcacheXmlPath;
+
+    @Value("${sso.otherSystem}")
+    private boolean ssoOtherSystem;
+
+    @Value("${sso.loginUrl}")
+    private String ssoLoginUrl;
 
     public EhCacheManager getEhCacheManager() {
         EhCacheManager em = new EhCacheManager();
@@ -77,28 +84,39 @@ public class ShiroConfig {
     public ShiroFilterFactoryBean getShiroFilterFactoryBean(DefaultWebSecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         Map<String, Filter> filters = shiroFilterFactoryBean.getFilters();
-        filters.put("anyRoles", myAuthorizationFilter());
+//        filters.put("anyRoles", myAuthorizationFilter());
         filters.put("authc", myFormAuthenticationFilter());
+        if(ssoOtherSystem) {
+            //自定义filter直接采用在这个bean方法里new出来，该map的key可以自定义，然后对下面的filterChain相关的链接做过滤
+            filters.put("ssoFilter", new SsoFilter(ssoLoginUrl));
+        }
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         shiroFilterFactoryBean.setLoginUrl("/login");
-        shiroFilterFactoryBean.setSuccessUrl("/test/index");
+        shiroFilterFactoryBean.setSuccessUrl("/login");
         shiroFilterFactoryBean.setUnauthorizedUrl("/403");
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         filterChainDefinitionMap.put("/test/aaa", "anon");
-        filterChainDefinitionMap.put("/login", "authc");
-        filterChainDefinitionMap.put("/**", "user");
+        if(ssoOtherSystem) {
+            filterChainDefinitionMap.put("/login", "authc, ssoFilter");
+            filterChainDefinitionMap.put("/**", "user, ssoFilter");
+        } else {
+            filterChainDefinitionMap.put("/login", "authc");
+            filterChainDefinitionMap.put("/**", "user");
+        }
+
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }
 
-    @Bean
-    public MyAuthorizationFilter myAuthorizationFilter() {
-        return new MyAuthorizationFilter();
-    }
+//    @Bean
+//    public MyAuthorizationFilter myAuthorizationFilter() {
+//        return new MyAuthorizationFilter();
+//    }
 
     @Bean
     public MyFormAuthenticationFilter myFormAuthenticationFilter() {
-        return new MyFormAuthenticationFilter();
+        MyFormAuthenticationFilter myFormAuthenticationFilter = new MyFormAuthenticationFilter();
+        return myFormAuthenticationFilter;
     }
 
     @Bean(name = "securityManager")
