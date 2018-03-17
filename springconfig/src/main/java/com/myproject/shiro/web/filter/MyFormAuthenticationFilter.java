@@ -24,8 +24,8 @@ public class MyFormAuthenticationFilter extends FormAuthenticationFilter {
         Subject currentUser = SecurityUtils.getSubject();
         ShiroUser shiroUser = (ShiroUser) subject.getPrincipal();
         Session session = currentUser.getSession();
-        session.setAttribute("usercode", shiroUser.getLoggerinName());
-        session.setAttribute("username", shiroUser.getName());
+        session.setAttribute("userCode", shiroUser.getLoggerinName());
+        session.setAttribute("userName", shiroUser.getName());
 
         //清理原先的地址
         WebUtils.getAndClearSavedRequest(request);

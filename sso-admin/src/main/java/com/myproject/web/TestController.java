@@ -1,5 +1,6 @@
 package com.myproject.web;
 
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,8 +16,9 @@ import javax.servlet.http.HttpSession;
 public class TestController {
 
     @RequestMapping("index")
+    @RequiresRoles("admin")
     public String index(Model model, HttpSession session) {
-        String username = (String) session.getAttribute("username");
+        String username = (String) session.getAttribute("userName");
         model.addAttribute("userName", username);
         return "index";
     }
@@ -29,6 +31,7 @@ public class TestController {
 
     @RequestMapping("bbb")
     @ResponseBody
+    @RequiresRoles("manager")
     public String bbb() {
         return "bbb";
     }
