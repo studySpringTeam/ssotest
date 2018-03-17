@@ -1,7 +1,7 @@
-package com.myproject.shiro.service.spring;
+package com.springconfig.shiro.spring;
 
-import com.myproject.shiro.exception.PasswordEmptyException;
-import com.myproject.shiro.exception.UsernameEmptyException;
+import com.springconfig.shiro.exception.PasswordEmptyException;
+import com.springconfig.shiro.exception.UsernameEmptyException;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;

@@ -1,4 +1,4 @@
-package com.myproject.shiro.exception;
+package com.springconfig.shiro.exception;
 
 import org.apache.shiro.authc.AuthenticationException;
 

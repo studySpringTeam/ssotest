@@ -1,4 +1,4 @@
-package com.myproject.web;
+package com.sso.web;
 
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.stereotype.Controller;

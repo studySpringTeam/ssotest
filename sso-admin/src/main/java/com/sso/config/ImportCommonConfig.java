@@ -1,5 +1,7 @@
-package com.myproject.config;
+package com.sso.config;
 
+import com.springconfig.config.ShiroConfig;
+import com.springconfig.config.TomcatConfig;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScans;
@@ -14,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
         ShiroConfig.class
 })
 @ComponentScans({
-        @ComponentScan(basePackages = {"com.myproject.web", "com.myproject.service"})
+        @ComponentScan(basePackages = {"com.sso.web"})
 })
 public class ImportCommonConfig {
 }

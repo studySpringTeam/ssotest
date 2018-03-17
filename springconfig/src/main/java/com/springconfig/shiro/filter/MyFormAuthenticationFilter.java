@@ -1,6 +1,6 @@
-package com.myproject.shiro.web.filter;
+package com.springconfig.shiro.filter;
 
-import com.myproject.shiro.service.spring.DemoRealm.ShiroUser;
+import com.springconfig.shiro.spring.DemoRealm.ShiroUser;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;

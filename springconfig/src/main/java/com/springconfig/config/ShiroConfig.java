@@ -1,9 +1,8 @@
-package com.myproject.config;
+package com.springconfig.config;
 
-import com.myproject.shiro.service.spring.DemoRealm;
-import com.myproject.shiro.web.filter.MyAuthorizationFilter;
-import com.myproject.shiro.web.filter.MyFormAuthenticationFilter;
-import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import com.springconfig.shiro.spring.DemoRealm;
+import com.springconfig.shiro.filter.MyAuthorizationFilter;
+import com.springconfig.shiro.filter.MyFormAuthenticationFilter;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;

@@ -1,4 +1,4 @@
-package com.myproject.shiro.web.filter;
+package com.springconfig.shiro.filter;
 
 import org.apache.shiro.web.filter.authz.AuthorizationFilter;
 
