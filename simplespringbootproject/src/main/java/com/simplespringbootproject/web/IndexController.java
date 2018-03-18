@@ -15,7 +15,7 @@ public class IndexController {
     @RequestMapping("index")
     public String index(Model model, HttpSession session) {
         String username = (String) session.getAttribute("userName");
-        model.addAttribute("userName", "王敏");
+        model.addAttribute("userName", username);
         return "index";
     }
 }
