@@ -1,5 +1,6 @@
 package com.sso.web;
 
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +21,7 @@ public class TestController {
     public String index(Model model, HttpSession session) {
         String username = (String) session.getAttribute("userName");
         model.addAttribute("userName", username);
+        model.addAttribute("token", SecurityUtils.getSubject().getSession().getId().toString());
         return "index";
     }
 

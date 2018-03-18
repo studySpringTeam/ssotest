@@ -5,5 +5,6 @@
 </head>
 <body>
     欢迎来到springboot, ${userName}
+    点击去<a id="bSystem" href="http://127.0.0.1:5001/index?token=${token}" target="_blank">B系统</a>
 </body>
 </html>

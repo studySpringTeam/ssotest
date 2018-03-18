@@ -32,8 +32,7 @@ public class SsoFilter extends AccessControlFilter {
         if(!subject.isAuthenticated() && !subject.isRemembered()) {
             //如果没有登录，重定向到单点登录系统
             HttpServletRequest req = (HttpServletRequest) request;
-            //todo 希望在请求发现没有登录时，把原链接放进redis，该操作在上一次请求被shiro拦截的时候做，放入一个filter里
-            String reqUrl = req.getScheme() + "://127.0.0.1:" + req.getServerPort() + req.getContextPath() + req.getRequestURI();
+            String reqUrl = req.getScheme() + "://127.0.0.1:" + req.getServerPort() + req.getContextPath() + WebUtils.getSavedRequest(request).getRequestURI();
             HttpServletResponse res = (HttpServletResponse) response;
             res.sendRedirect(ssoLoginUrl + "?redirectUrl="+reqUrl);
             return false;

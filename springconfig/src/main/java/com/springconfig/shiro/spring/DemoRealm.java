@@ -38,8 +38,8 @@ public class DemoRealm extends AuthorizingRealm {
             throw new IncorrectCredentialsException("用户名或者密码错误");
         }
         //假定用户名和密码就是system和123456
-        String password = new Md5Hash("123456", "system", 2).toString();
-        return new SimpleAuthenticationInfo(new ShiroUser("system","系统"), password, getName());
+        String password = new Md5Hash("123456", username, 2).toString();
+        return new SimpleAuthenticationInfo(new ShiroUser(username,"系统"), password, getName());
     }
 
     /**

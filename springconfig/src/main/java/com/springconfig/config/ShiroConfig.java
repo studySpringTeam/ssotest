@@ -116,6 +116,7 @@ public class ShiroConfig {
     @Bean
     public MyFormAuthenticationFilter myFormAuthenticationFilter() {
         MyFormAuthenticationFilter myFormAuthenticationFilter = new MyFormAuthenticationFilter();
+        myFormAuthenticationFilter.setSsoOtherSystem(ssoOtherSystem);
         return myFormAuthenticationFilter;
     }
 

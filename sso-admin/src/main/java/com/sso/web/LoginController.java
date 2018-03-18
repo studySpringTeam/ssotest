@@ -13,6 +13,7 @@ public class LoginController {
 
     @RequestMapping("/login")
     public String login(String redirectUrl, Model model) {
+        model.addAttribute("redirectUrl", redirectUrl);
         return "login";
     }
 }

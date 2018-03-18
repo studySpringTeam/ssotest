@@ -9,6 +9,11 @@ spring:
   thymeleaf:
     cache: false
     enabled: false
+  redis:
+    host: localhost
+    password:
+    database: 0
+    port: 6379
 
 #shiro配置文件路径
 shiro:
