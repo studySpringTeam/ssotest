@@ -86,8 +86,8 @@ public class ShiroConfig {
     @Bean
     public DemoRealm demoRealm() {
         DemoRealm demoRealm = new DemoRealm();
-        demoRealm.setAuthenticationCachingEnabled(true);
-        demoRealm.setAuthorizationCachingEnabled(true);
+//        demoRealm.setAuthenticationCachingEnabled(true);
+//        demoRealm.setAuthorizationCachingEnabled(true);
         return demoRealm;
     }
 

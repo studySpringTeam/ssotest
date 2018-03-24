@@ -1,7 +1,6 @@
 package com.simplespringbootproject.config;
 
 import com.springconfig.config.ShiroConfig;
-import com.springconfig.config.TomcatConfig;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScans;
