@@ -1,5 +1,6 @@
 package com.springconfig.shiro.filter;
 
+import com.springconfig.shiro.dao.CustomSessionDao;
 import com.springconfig.shiro.spring.DemoRealm.ShiroUser;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -28,6 +29,8 @@ public class MyFormAuthenticationFilter extends FormAuthenticationFilter {
 
     @Autowired
     private StringRedisTemplate redisTemplate;
+
+    private static final String KEY_USER_PREFIX = "shiro_redis_user:";
 
     private boolean ssoOtherSystem;
 
@@ -72,7 +75,7 @@ public class MyFormAuthenticationFilter extends FormAuthenticationFilter {
 
         if(!ssoOtherSystem) {
             //user的信息存入redis，键为sessionId
-            redisTemplate.opsForValue().set(currentUser.getSession().getId().toString(), shiroUser.getLoggerinName(), 60*30, TimeUnit.SECONDS);
+            redisTemplate.opsForValue().set(KEY_USER_PREFIX+currentUser.getSession().getId().toString(), shiroUser.getLoggerinName(), 60*30, TimeUnit.SECONDS);
         }
 
         //清理原先的地址
@@ -80,8 +83,13 @@ public class MyFormAuthenticationFilter extends FormAuthenticationFilter {
             WebUtils.getAndClearSavedRequest(request);
             WebUtils.redirectToSavedRequest(request, response, "index");
         } else {
+            String redirectUrl = WebUtils.getCleanParam(request, "redirectUrl");
             WebUtils.getAndClearSavedRequest(request);
-            WebUtils.redirectToSavedRequest(request, response, getSuccessUrl());
+            if(redirectUrl!=null && !"".equals(redirectUrl)) {
+                WebUtils.redirectToSavedRequest(request, response, getSuccessUrl()+"?redirectUrl="+redirectUrl);
+            } else {
+                WebUtils.redirectToSavedRequest(request, response, getSuccessUrl());
+            }
         }
         return false;
     }
@@ -99,7 +107,7 @@ public class MyFormAuthenticationFilter extends FormAuthenticationFilter {
             token = requestUrl==null?null:requestUrl.split("&")[0].trim();
         }
         if(ssoOtherSystem && token != null && !"".equals(token)) {
-            username = redisTemplate.opsForValue().get(token);
+            username = redisTemplate.opsForValue().get(KEY_USER_PREFIX+token);
             password = "123456";
         } else {
             username = getUsername(request);

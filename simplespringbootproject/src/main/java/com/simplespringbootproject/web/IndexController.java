@@ -1,5 +1,6 @@
 package com.simplespringbootproject.web;
 
+import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ public class IndexController {
     public String index(Model model, HttpSession session) {
         String username = (String) session.getAttribute("userName");
         model.addAttribute("userName", username);
+        System.out.println(SecurityUtils.getSubject().getSession().getId().toString());
         return "index";
     }
 }

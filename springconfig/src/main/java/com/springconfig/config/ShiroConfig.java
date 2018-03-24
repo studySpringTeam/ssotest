@@ -1,14 +1,20 @@
 package com.springconfig.config;
 
+import com.springconfig.shiro.cache.CustomRedisCacheManager;
+import com.springconfig.shiro.dao.CustomSessionDao;
 import com.springconfig.shiro.filter.SsoFilter;
 import com.springconfig.shiro.spring.DemoRealm;
 import com.springconfig.shiro.filter.MyAuthorizationFilter;
 import com.springconfig.shiro.filter.MyFormAuthenticationFilter;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
+import org.apache.shiro.mgt.SubjectDAO;
+import org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.SimpleCookie;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
@@ -44,6 +50,12 @@ public class ShiroConfig {
         return em;
     }
 
+    @Bean(name="customRedisCacheManager")
+    public CustomRedisCacheManager customRedisCacheManager() {
+        CustomRedisCacheManager crc = new CustomRedisCacheManager();
+        return crc;
+    }
+
     /**
      * 注册DelegatingFilterProxy（Shiro）
      * @return
@@ -74,6 +86,8 @@ public class ShiroConfig {
     @Bean
     public DemoRealm demoRealm() {
         DemoRealm demoRealm = new DemoRealm();
+        demoRealm.setAuthenticationCachingEnabled(true);
+        demoRealm.setAuthorizationCachingEnabled(true);
         return demoRealm;
     }
 
@@ -120,19 +134,54 @@ public class ShiroConfig {
         return myFormAuthenticationFilter;
     }
 
+    @Bean(name="sessionIdGenerator")
+    public JavaUuidSessionIdGenerator sessionIdGenerator() {
+        JavaUuidSessionIdGenerator javaUuidSessionIdGenerator = new JavaUuidSessionIdGenerator();
+        return javaUuidSessionIdGenerator;
+    }
+
+    @Bean(name="customSessionDao")
+    public CustomSessionDao customSessionDao(JavaUuidSessionIdGenerator sessionIdGenerator) {
+        CustomSessionDao customSessionDao = new CustomSessionDao();
+        customSessionDao.setSessionIdGenerator(sessionIdGenerator);
+        return customSessionDao;
+    }
+
+//    @Bean(name="simpleCookie")
+//    public SimpleCookie simpleCookie() {
+//        SimpleCookie simpleCookie = new SimpleCookie();
+//        return simpleCookie;
+//    }
+
+    @Bean(name="defaultWebSessionManager")
+    public DefaultWebSessionManager defaultWebSessionManager(CustomSessionDao customSessionDao) {
+        DefaultWebSessionManager manager = new DefaultWebSessionManager();
+        manager.setSessionDAO(customSessionDao);
+//        manager.setSessionIdCookieEnabled(true);
+//        manager.setSessionIdCookie(simpleCookie);
+        manager.setDeleteInvalidSessions(true);
+        manager.setGlobalSessionTimeout(customSessionDao.getExpireTime());
+        manager.setSessionValidationSchedulerEnabled(true);
+
+        return manager;
+    }
+
     @Bean(name = "securityManager")
-    public DefaultWebSecurityManager getDefaultWebSecurityManager(DemoRealm demoRealm) {
+    public DefaultWebSecurityManager getDefaultWebSecurityManager(DemoRealm demoRealm,
+                                                                  DefaultWebSessionManager defaultWebSessionManager,
+                                                                  CustomRedisCacheManager customRedisCacheManager) {
         DefaultWebSecurityManager dwsm = new DefaultWebSecurityManager();
         dwsm.setRealm(demoRealm);
-        // <!-- 用户授权/认证信息Cache, 采用EhCache 缓存 -->
-        dwsm.setCacheManager(getEhCacheManager());
+        dwsm.setCacheManager(customRedisCacheManager);// 换成Redis的缓存管理器
+        dwsm.setSessionManager(defaultWebSessionManager);
+//        dwsm.setCacheManager(getEhCacheManager());
         return dwsm;
     }
 
     @Bean
-    public AuthorizationAttributeSourceAdvisor getAuthorizationAttributeSourceAdvisor(DemoRealm demoRealm) {
+    public AuthorizationAttributeSourceAdvisor getAuthorizationAttributeSourceAdvisor(DefaultWebSecurityManager defaultWebSecurityManager) {
         AuthorizationAttributeSourceAdvisor aasa = new AuthorizationAttributeSourceAdvisor();
-        aasa.setSecurityManager(getDefaultWebSecurityManager(demoRealm));
+        aasa.setSecurityManager(defaultWebSecurityManager);
         return new AuthorizationAttributeSourceAdvisor();
     }
 }
