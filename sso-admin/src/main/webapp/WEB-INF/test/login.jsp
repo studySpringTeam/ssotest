@@ -11,7 +11,7 @@
         <%
             String redirectUrl = (String) request.getAttribute("redirectUrl");
             if (redirectUrl != null && redirectUrl != "") {
-                response.sendRedirect(redirectUrl+"?SHAREJSESSIONID="+request.getSession().getId());
+                response.sendRedirect(redirectUrl);
             } else {
                 response.sendRedirect(request.getContextPath() + "/test/index");
             }
