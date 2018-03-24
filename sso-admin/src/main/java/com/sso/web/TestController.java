@@ -21,7 +21,7 @@ public class TestController {
     public String index(Model model, HttpSession session) {
         String username = (String) session.getAttribute("userName");
         model.addAttribute("userName", username);
-        model.addAttribute("token", SecurityUtils.getSubject().getSession().getId().toString());
+//        model.addAttribute("token", SecurityUtils.getSubject().getSession().getId().toString());
         System.out.println(SecurityUtils.getSubject().getSession().getId().toString());
         return "index";
     }
