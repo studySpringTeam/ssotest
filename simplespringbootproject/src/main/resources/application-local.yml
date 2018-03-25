@@ -1,0 +1,10 @@
+spring:
+  redis:
+    host: localhost
+    password:
+    database: 0
+    port: 6379
+
+sso:
+  loginUrl: http://127.0.0.1:5000/login
+  otherSystem: true

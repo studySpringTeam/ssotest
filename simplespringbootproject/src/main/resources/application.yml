@@ -4,11 +4,9 @@ server:
 spring:
   thymeleaf:
     mode: HTML5
+  profiles:
+      active: local
 
 #shiro配置文件路径
 shiro:
   configLocation: classpath:shiro/ehcache-shiro.xml
-
-sso:
-  loginUrl: http://127.0.0.1:5000/login
-  otherSystem: true

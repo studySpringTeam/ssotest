@@ -1,0 +1,10 @@
+spring:
+  redis:
+    host: 123.207.68.179
+    password: tcredispassword
+    database: 0
+    port: 6379
+
+#配置成自己电脑上webapp路径，发布时可改为服务器上路径
+webapp:
+  path: /root/myproject/
