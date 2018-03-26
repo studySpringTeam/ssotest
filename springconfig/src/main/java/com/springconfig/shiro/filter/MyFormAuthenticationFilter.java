@@ -102,20 +102,20 @@ public class MyFormAuthenticationFilter extends FormAuthenticationFilter {
         String username;
         String password;
 
-        String token = null;
-        if(ssoOtherSystem && WebUtils.getSavedRequest(request) != null) {
-            //获得token
-            String requestUrl = WebUtils.getSavedRequest(request).getRequestUrl();
-            requestUrl = requestUrl.substring(requestUrl.indexOf("token=")+6);
-            token = requestUrl==null?null:requestUrl.split("&")[0].trim();
-        }
-        if(ssoOtherSystem && token != null && !"".equals(token)) {
-            username = redisTemplate.opsForValue().get(KEY_USER_PREFIX+token);
-            password = "123456";
-        } else {
+//        String token = null;
+//        if(ssoOtherSystem && WebUtils.getSavedRequest(request) != null) {
+//            //获得token
+//            String requestUrl = WebUtils.getSavedRequest(request).getRequestUrl();
+//            requestUrl = (requestUrl.indexOf("token=")==-1)?null:requestUrl.substring(requestUrl.indexOf("token=")+6);
+//            token = requestUrl==null?null:requestUrl.split("&")[0].trim();
+//        }
+//        if(ssoOtherSystem && token != null && !"".equals(token)) {
+//            username = redisTemplate.opsForValue().get(KEY_USER_PREFIX+token);
+//            password = "123456";
+//        } else {
             username = getUsername(request);
             password = getPassword(request);
-        }
+//        }
         boolean rememberMe = isRememberMe(request);
         String host = getHost(request);
         password = password==null?"":new Md5Hash(password, username, 2).toString();
