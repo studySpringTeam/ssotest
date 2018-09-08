@@ -89,7 +89,7 @@ public class CustomSessionDao extends AbstractSessionDAO {
                 }
             }
             //如果成功登录后刷新session信息，redis上关于user的数据重新设置过期时间
-            stringRedisTemplate.opsForValue().set(KEY_USER_PREFIX+nowSessionId, userCode, 60*30, TimeUnit.SECONDS);
+//            stringRedisTemplate.opsForValue().set(KEY_USER_PREFIX+nowSessionId, userCode, 60*30, TimeUnit.SECONDS);
             stringRedisTemplate.opsForValue().set(KEY_USER_PREFIX+userCode, nowSessionId, 60*30, TimeUnit.SECONDS);
         }
         //设置过期时间

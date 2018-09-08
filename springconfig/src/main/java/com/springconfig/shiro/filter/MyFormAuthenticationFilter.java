@@ -76,7 +76,7 @@ public class MyFormAuthenticationFilter extends FormAuthenticationFilter {
         if(!ssoOtherSystem) {
             String nowSessionId = currentUser.getSession().getId().toString();
             //user的信息存入redis，键为sessionId
-            redisTemplate.opsForValue().set(KEY_USER_PREFIX+nowSessionId, shiroUser.getLoggerinName(), 60*30, TimeUnit.SECONDS);
+//            redisTemplate.opsForValue().set(KEY_USER_PREFIX+nowSessionId, shiroUser.getLoggerinName(), 60*30, TimeUnit.SECONDS);
             //存一个键为user信息，值为sessionId的，方便踢出用户
             redisTemplate.opsForValue().set(KEY_USER_PREFIX+shiroUser.getLoggerinName(), nowSessionId, 60*30, TimeUnit.SECONDS);
         }
